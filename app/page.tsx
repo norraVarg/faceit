@@ -1,9 +1,7 @@
-"use client"
-
-import FeedComponent from './feed/feed-page-component'
+import FeedPage from './feed/page'
 
 const Home = () => {
-  return (<FeedComponent />)
+  return (<FeedPage />)
 }
 
 export default Home
