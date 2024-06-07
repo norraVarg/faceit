@@ -13,7 +13,7 @@ const UsersList = (props: Props) => {
       <h1 className="flex items-center text-lg font-semibold leading-6 text-gray-900 px-5 sm:hidden">Users</h1>
       <ul role="list" className="row-start-2 row-span-10 divide-y divide-gray-200 overflow-y-auto sm:row-start-1 sm:row-span-11">
         {ids.map(id => (
-          <div className="flex flex-col gap-1 px-5 py-2 sm:px-7">
+          <div className="flex flex-col gap-1 px-5 py-2 sm:px-7" key={id}>
             <p className="text-xs font-semibold leading-6 text-gray-900">{entities[id].name}</p>
             <p className="truncate text-xs leading-5 text-gray-500">Website: {entities[id].website}</p>
             <p className="truncate text-xs leading-5 text-gray-500">Email: {entities[id].email}</p>
