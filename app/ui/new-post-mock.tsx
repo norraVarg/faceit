@@ -21,7 +21,7 @@ const NewPostMock = (params: Pramas) => {
 
   return (
     <button onClick={addNewPost} className='bg-sky-500 hover:bg-sky-700 text-white text-xs font-bold py-1 px-3 rounded self-center capitalize'>
-      add new post
+      new post
     </button>
   )
 
