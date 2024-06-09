@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useRef, useState } from 'react'
 import useClickOutside from '../lib/hooks/useClickOutside'
 
 const NAV_ITEMS = [

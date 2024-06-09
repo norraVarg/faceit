@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import PersistStoreProvider from './lib/features/PersistStoreProvider'
 import NavBar from './ui/nav-bar'
 
 const inter = Inter({ subsets: ["latin"] })
@@ -18,13 +19,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-          <div className="fixed w-full">
-            <NavBar />
+        <PersistStoreProvider>
+          <div className="relative flex h-screen flex-col md:flex-row md:overflow-hidden">
+            <div className="fixed w-full">
+              <NavBar />
+            </div>
+            <div>notification</div>
+            <div className="grow pt-6 h-screen overflow-y-hidden">
+              {children}
+            </div>
           </div>
-          <div>notification</div>
-          <div className="grow pt-6 h-screen overflow-y-hidden">{children}</div>
-        </div>
+        </PersistStoreProvider>
       </body>
     </html>
   )

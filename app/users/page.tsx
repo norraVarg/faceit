@@ -1,28 +1,16 @@
 'use client'
 
-import { useRef } from 'react'
-import { useUsersSelector, useUsersStore } from '@/app/lib/features/users/usersHooks'
-import { fetchUsers } from '../lib/features/users/usersSlice'
+import { usePersistlStore } from '../lib/features/persistStore'
 import UsersList from '../ui/users-list'
-import UsersProvider from '../lib/features/users/UsersStoreProvider'
 
 const UsersPage = () => {
-  return (<UsersProvider><UsersListComponent /></UsersProvider>)
-}
+  const users = usePersistlStore(state => state.users)
 
-const UsersListComponent = () => {
-  const store = useUsersStore()
-  const initialized = useRef(false)
-
-  if (!initialized.current) {
-    store.dispatch(fetchUsers())
-    initialized.current = true
-  }
-
-  const ids = useUsersSelector((state) => state.ids)
-  const entities = useUsersSelector((state) => state.entities)
-
-  return <UsersList ids={ids} entities={entities} />
+  return (
+    <main>
+      <UsersList ids={users.ids} entities={users.entities} />
+    </main>
+  )
 }
 
 export default UsersPage
