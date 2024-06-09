@@ -19,13 +19,13 @@ const config: Config = {
       },
       keyframes: {
         'background-pulse': {
-          'to': { backgroundColor: '#00bfff' }
+          'to': { backgroundColor: '#99f6e4' }
         },
         'scale': {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
         },
-      }
+      },
     }
   },
   plugins: [],

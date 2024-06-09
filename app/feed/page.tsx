@@ -33,9 +33,9 @@ const FeedComponent = () => {
   }
 
   return (
-    <main>
+    <main className=''>
       <Feed postIds={postIds} posts={posts} newPostIds={newPostIds} users={users} />
-      <div className='absolute top-2.5 right-1'>
+      <div className='absolute top-2.5 right-1 z-30'>
         <NewPostMock socket={socket} postCount={postIds.length} />
       </div>
     </main>

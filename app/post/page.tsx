@@ -8,6 +8,7 @@ import { fetchPostById } from '../lib/features/post/postSlice'
 import { useSearchParams } from 'next/navigation'
 import SomethingWentWrong from '../ui/something-went-wrong'
 import PostDetails from '../ui/post-details'
+import { usePersistlStore } from '../lib/features/persistStore'
 
 const PostPage = () => {
   return (<PostProvider><PostComponent /></PostProvider>)
@@ -15,6 +16,9 @@ const PostPage = () => {
 
 const PostComponent = () => {
   const store = usePostStore()
+  const post = usePostSelector((state) => state.post)
+  const users = usePersistlStore(state => state.users.entities)
+
   const initialized = useRef(false)
   const params = useSearchParams()
   const id = params.get('id')
@@ -28,9 +32,11 @@ const PostComponent = () => {
     initialized.current = true
   }
 
-  const post = usePostSelector((state) => state.post)
-
-  return post && <PostDetails post={post} />
+  return post && (
+    <main className='py-4 px-5 overflow-y-auto h-[85vh]'>
+      <PostDetails post={post} user={users[post.userId]} />
+    </main>
+  )
 }
 
 export default PostPage

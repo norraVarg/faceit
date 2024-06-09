@@ -28,14 +28,14 @@ const Feed = (params: Params) => {
   }, [newPostIds, previousNewPostIds, setNewPostReceived])
 
   return (
-    <div className='grid grid-rows-12 h-screen '>
+    <div className='grid grid-rows-12 h-screen'>
       <div className='flex items-center'>
         <h1 className="flex items-center text-lg font-semibold leading-6 text-gray-900 px-5 sm:hidden">Feed</h1>
         {newPostReceived && (
-          <div className='animate-scale text-xs text-green-600 sm:w-full sm:absolute sm:top-4 sm:left-72 sm:animate-bounce sm:text-white sm:font-semibold'>New post received</div>
+          <div className='z-30 animate-scale text-xs text-green-600 sm:w-full sm:absolute sm:top-4 sm:left-72 sm:animate-bounce sm:text-white sm:font-semibold'>New post received</div>
         )}
       </div>
-      <ul role="list" className="space-y-4 row-start-2 row-span-10 overflow-y-auto sm:row-start-1 sm:row-span-11">
+      <ul role="list" className="py-5 row-start-2 row-span-10 overflow-y-auto sm:row-start-1 sm:row-span-11">
         {postIds.map(id => (
           <Link href={`/post?id=${id}`} key={id} className={`${newPostIds.includes(id) ? ('animate-background-pulse') : ('')} px-5 py-2 flex justify-between hover:bg-sky-100 sm:px-7`}>
             <article className="flex space-x-4">
