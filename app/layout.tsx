@@ -20,12 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <PersistStoreProvider>
-          <div className="relative flex h-screen flex-col md:flex-row md:overflow-hidden">
+          <div className="relative h-screen w-screen overflow-hidden">
             <div className="fixed w-full">
               <NavBar />
             </div>
-            <div>notification</div>
-            <div className="grow pt-6 h-screen overflow-y-hidden">
+            <div className="pt-12 overflow-y-hidden sm:pt-14">
               {children}
             </div>
           </div>

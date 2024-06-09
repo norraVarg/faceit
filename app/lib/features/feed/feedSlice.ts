@@ -10,6 +10,7 @@ const feedAdapter = createEntityAdapter<Post>({
 const initialState = feedAdapter.getInitialState({
   fetchStatus: null as FetchStatus | null,
   message: null as string | null,
+  newPostIds: [] as number[]
 })
 
 export const fetchPosts = createAsyncThunk('fetch-posts', async () => {
@@ -23,6 +24,7 @@ const feedSlice = createSlice({
   reducers: {
     addNewPost(state, action: PayloadAction<Post>) {
       feedAdapter.addOne(state, action.payload)
+      state.newPostIds.push(action.payload.id)
     }
   },
   extraReducers: (builder) => {

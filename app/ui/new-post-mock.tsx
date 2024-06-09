@@ -15,7 +15,14 @@ const NewPostMock = (params: Pramas) => {
     if (socket.connected) {
       newPostIndex++
       newPostId++
-      socket.emit('addPost', { id: newPostId, title: `New Title ${newPostIndex}`, body: `This is a new post ${newPostIndex}`, userId: generateRandomId() })
+      socket.emit('addPost',
+        {
+          id: newPostId,
+          title: `New Title ${newPostIndex}`,
+          body: `This is a new post ${newPostIndex}`,
+          userId: generateRandomId(),
+          created: new Date().toISOString(),
+        })
     }
   }
 
