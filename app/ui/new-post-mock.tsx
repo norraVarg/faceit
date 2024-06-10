@@ -1,25 +1,25 @@
 import { Socket } from 'socket.io-client'
+import { TOTAL_POSTS_COUNT } from '../lib/definitions'
 import { generateRandomId } from '../lib/utils/generateRandomId'
+
+let postCount = TOTAL_POSTS_COUNT
 
 interface Pramas {
   socket: Socket
-  postCount: number
 }
 
 const NewPostMock = (params: Pramas) => {
-  const { socket, postCount } = params
-  let newPostIndex = postCount
-  let newPostId = postCount
+  const { socket } = params
 
   const addNewPost = () => {
     if (socket.connected) {
-      newPostIndex++
-      newPostId++
+      postCount++
+
       socket.emit('addPost',
         {
-          id: newPostId,
-          title: `New Title ${newPostIndex}`,
-          body: `This is a new post ${newPostIndex}`,
+          id: postCount,
+          title: `New Title ${postCount}`,
+          body: `This is a new post ${postCount}`,
           userId: generateRandomId(),
           created: new Date().toISOString(),
         })

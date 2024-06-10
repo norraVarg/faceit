@@ -4,7 +4,7 @@ import { socket } from '@/socket'
 import { useRef } from 'react'
 import FeedProvider from '../lib/features/feed/FeedStoreProvider'
 import { useFeedSelector, useFeedStore } from '../lib/features/feed/feedHooks'
-import { addNewPost, fetchPosts } from '../lib/features/feed/feedSlice'
+import { fetchPosts } from '../lib/features/feed/feedSlice'
 import { usePersistlStore } from '../lib/features/persistStore'
 import Feed from '../ui/feed'
 import NewPostMock from '../ui/new-post-mock'
@@ -21,22 +21,24 @@ const FeedComponent = () => {
 
   const postIds = useFeedSelector((state) => state.ids)
   const posts = useFeedSelector((state) => state.entities)
-  const newPostIds = useFeedSelector((state) => state.newPostIds)
+
   const users = usePersistlStore(state => state.users.entities)
+  const newPosts = usePersistlStore(state => state.newPosts)
+  const addNewPost = usePersistlStore(state => state.addNewPost)
 
   const socketInitialized = useRef(false)
   if (!socketInitialized.current) {
     socket.on("newPostAdded", (post) => {
-      feedStore.dispatch(addNewPost(post))
+      addNewPost(post)
     })
     socketInitialized.current = true
   }
 
   return (
     <main className=''>
-      <Feed postIds={postIds} posts={posts} newPostIds={newPostIds} users={users} />
+      <Feed postIds={postIds} posts={posts} newPosts={newPosts} users={users} />
       <div className='absolute top-2.5 right-1 z-30'>
-        <NewPostMock socket={socket} postCount={postIds.length} />
+        <NewPostMock socket={socket} />
       </div>
     </main>
   )

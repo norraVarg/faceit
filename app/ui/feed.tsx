@@ -1,22 +1,33 @@
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { Post, User } from '../lib/definitions'
-import { getTimeStamp } from '../lib/getTimeStamp'
+import { useInfiniteScroll } from '../lib/hooks/useInfiniteScroll'
+import FeedItem from './feed-item'
+
+const PAGE_SIZE = 20
 
 interface Params {
   postIds: number[]
   posts: Record<number, Post>
-  newPostIds: number[]
-  users: Record<number, User> | null
+  newPosts: {
+    ids: number[]
+    entities: Record<number, Post>
+  }
+  users: Record<number, User>
 }
 
 const Feed = (params: Params) => {
-  const { postIds, posts, newPostIds, users } = params
-  const [newPostReceived, setNewPostReceived] = useState(false)
-  const previousNewPostIds = useRef(newPostIds)
+  const { postIds, posts, newPosts, users } = params
 
+  const [newPostReceived, setNewPostReceived] = useState(false)
+  const previousNewPostIds = useRef(newPosts.ids)
+
+  const { anchorRef, fetchMore } = useInfiniteScroll()
+  const [oldPostIds, setOldPostIds] = useState<number[]>([])
+  const hasMorePosts = oldPostIds.length === 0 || oldPostIds.length < postIds.length
+
+  // highlight new post received for 3 seconds
   useEffect(() => {
-    if (newPostIds.length > previousNewPostIds.current.length) {
+    if (newPosts.ids.length > previousNewPostIds.current.length) {
       setNewPostReceived(true)
     }
 
@@ -25,7 +36,14 @@ const Feed = (params: Params) => {
     }, 3000)
 
     return () => clearTimeout(timeout)
-  }, [newPostIds, previousNewPostIds, setNewPostReceived])
+  }, [newPosts.ids, previousNewPostIds, setNewPostReceived])
+
+  // handle infinite scroll to fetch more posts
+  useEffect(() => {
+    if (hasMorePosts && fetchMore) {
+      setOldPostIds(postIds.slice(0, oldPostIds.length + PAGE_SIZE))
+    }
+  }, [fetchMore, postIds, hasMorePosts])
 
   return (
     <div className='grid grid-rows-12 h-screen'>
@@ -36,27 +54,11 @@ const Feed = (params: Params) => {
         )}
       </div>
       <ul role="list" className="py-5 row-start-2 row-span-10 overflow-y-auto sm:row-start-1 sm:row-span-11">
-        {postIds.map(id => (
-          <Link href={`/post?id=${id}`} key={id} className={`${newPostIds.includes(id) ? ('animate-background-pulse') : ('')} px-5 py-2 flex justify-between hover:bg-sky-100 sm:px-7`}>
-            <article className="flex space-x-4">
-              <div className='min-w-min flex flex-col items-center row-start-1 row-end-7 col-start-1 col-end-3'>
-                <img src={users ?
-                  (`https://api.dicebear.com/8.x/avataaars/svg?seed=${users[posts[id].userId].name}`) :
-                  ('')}
-                  className="min-h-12 min-w-12 flex-none rounded-full bg-gray-50" />
-                <div className='grow border-l-4 border-slate-200 min-h-5 w-0 mt-2'></div>
-              </div>
-              <div className='flex flex-col'>
-                <div className='h-12 flex flex-col justify-center'>
-                  {/* todo: add route to author page */}
-                  {!!users && (<span className='font-semibold text-xs'>{users[posts[id].userId].name}</span>)}
-                  <time className='text-xs leading-5 text-gray-500'>{getTimeStamp(posts[id]['created'])}</time>
-                </div>
-                <p className="mt-2 line-clamp-3 max-h-32 text-wrap overflow-y-hidden text-ellipsis text-xs leading-6 text-gray-700">{posts[id].body}</p>
-              </div>
-            </article>
-          </Link>
-        ))}
+        {newPosts.ids.map((id) => (<FeedItem key={id} post={newPosts.entities[id]} user={users[newPosts.entities[id].userId]} />))}
+        {oldPostIds.map((id) => (<FeedItem key={id} post={posts[id]} user={users[posts[id].userId]} />))}
+        {hasMorePosts && (
+          <div ref={anchorRef} className='flex justify-center mt-2'>{(<span className='text-xs text-gray-600'>Fetching more...</span>)}</div>
+        )}
       </ul>
     </div>
   )

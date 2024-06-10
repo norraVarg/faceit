@@ -31,3 +31,5 @@ export enum FetchStatus {
   SUCCESS = 'success',
   ERROR = 'error',
 }
+
+export const TOTAL_POSTS_COUNT = 100

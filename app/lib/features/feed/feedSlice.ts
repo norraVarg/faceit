@@ -9,8 +9,6 @@ const feedAdapter = createEntityAdapter<Post>({
 
 const initialState = feedAdapter.getInitialState({
   fetchStatus: null as FetchStatus | null,
-  message: null as string | null,
-  newPostIds: [] as number[]
 })
 
 export const fetchPosts = createAsyncThunk('fetch-posts', async () => {
@@ -21,26 +19,17 @@ export const fetchPosts = createAsyncThunk('fetch-posts', async () => {
 const feedSlice = createSlice({
   name: 'feed',
   initialState,
-  reducers: {
-    addNewPost(state, action: PayloadAction<Post>) {
-      feedAdapter.addOne(state, action.payload)
-      state.newPostIds.push(action.payload.id)
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, action: PayloadAction<Post[]>) => {
       feedAdapter.setAll(state, action.payload)
       state.fetchStatus = FetchStatus.SUCCESS
-      state.message = 'Fetched posts successfully.'
     }).addCase(fetchPosts.pending, (state) => {
       state.fetchStatus = FetchStatus.LOADING
-      state.message = 'Fetching posts...'
     }).addCase(fetchPosts.rejected, (state) => {
       state.fetchStatus = FetchStatus.ERROR
-      state.message = 'Failed to fetch posts.'
     })
   }
 })
 
 export default feedSlice
-export const { addNewPost } = feedSlice.actions
