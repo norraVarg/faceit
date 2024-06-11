@@ -12,14 +12,13 @@ interface Params {
     entities: Record<number, Post>
   }
   users: Record<number, User>
-  onScroll: (position: number) => void
   scrollPosition: number
-  setPage: (page: number) => void
-  page: number
+  onScroll: (position: number) => void
+  fetchMorePost: () => void
 }
 
 const Feed = (params: Params) => {
-  const { page, displayedPostIds, posts, newPosts, users, onScroll, scrollPosition, setPage } = params
+  const { displayedPostIds, posts, newPosts, users, scrollPosition, onScroll, fetchMorePost } = params
 
   const [newPostReceived, setNewPostReceived] = useState(false)
   const previousNewPostIds = useRef(newPosts.ids)
@@ -44,7 +43,7 @@ const Feed = (params: Params) => {
   // handle infinite scroll
   useEffect(() => {
     if (fetchMore) {
-      setPage(page + 1)
+      fetchMorePost()
     }
   }, [fetchMore])
 
@@ -66,7 +65,6 @@ const Feed = (params: Params) => {
       </ul>
     </div>
   )
-
 }
 
 export default Feed

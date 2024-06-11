@@ -17,8 +17,7 @@ const PostDetails = (params: Params) => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
           </svg>
         </Link>
-        <img src={`https://api.dicebear.com/8.x/avataaars/svg?seed=${user.name}`}
-          className="w-20 h-20 rounded-full bg-gray-50" />
+        <img src={`https://api.dicebear.com/8.x/avataaars/svg?seed=${user.name}`} alt='user-avatar' className="w-20 h-20 rounded-full bg-gray-50" />
         <span>{user.name}</span>
       </div>
       <article className='flex flex-col gap-4'>

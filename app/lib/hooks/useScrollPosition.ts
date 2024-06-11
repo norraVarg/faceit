@@ -13,7 +13,7 @@ const useScrollPosition = <T extends HTMLElement>(position: number) => {
     }, 200)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [position])
 
   return ref
 }

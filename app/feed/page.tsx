@@ -16,10 +16,20 @@ const FeedPage = () => (<FeedProvider><FeedComponent /></FeedProvider>)
 const FeedComponent = () => {
   const feedStore = useFeedStore()
 
+  // initialize feed data
   const feedInitialized = useRef(false)
   if (!feedInitialized.current) {
     feedStore.dispatch(fetchPosts())
     feedInitialized.current = true
+  }
+
+  // initialize socket event listener
+  const socketInitialized = useRef(false)
+  if (!socketInitialized.current) {
+    socket.on("newPostAdded", (post) => {
+      addNewPost(post)
+    })
+    socketInitialized.current = true
   }
 
   const postIds = useFeedSelector((state) => state.ids)
@@ -39,17 +49,13 @@ const FeedComponent = () => {
     setScrollPosition(position)
   }
 
-  const socketInitialized = useRef(false)
-  if (!socketInitialized.current) {
-    socket.on("newPostAdded", (post) => {
-      addNewPost(post)
-    })
-    socketInitialized.current = true
+  const fetchMorePost = () => {
+    setPage(page + 1)
   }
 
   return (
     <main className=''>
-      <Feed page={page} displayedPostIds={displayedPostIds} posts={posts} newPosts={newPosts} users={users} onScroll={onScroll} setPage={setPage} scrollPosition={scrollPosition} />
+      <Feed displayedPostIds={displayedPostIds} posts={posts} newPosts={newPosts} users={users} onScroll={onScroll} fetchMorePost={fetchMorePost} scrollPosition={scrollPosition} />
       <div className='absolute top-2.5 right-1 z-30'>
         <NewPostMock socket={socket} />
       </div>
