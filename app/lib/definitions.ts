@@ -32,4 +32,4 @@ export enum FetchStatus {
   ERROR = 'error',
 }
 
-export const TOTAL_POSTS_COUNT = 100
+export const TOTAL_POST_COUNT = 100

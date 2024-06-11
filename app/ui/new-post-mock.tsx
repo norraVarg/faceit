@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io-client'
-import { TOTAL_POSTS_COUNT } from '../lib/definitions'
+import { TOTAL_POST_COUNT } from '../lib/definitions'
 import { generateRandomId } from '../lib/utils/generateRandomId'
 
-let postCount = TOTAL_POSTS_COUNT
+let postCount = TOTAL_POST_COUNT
 
 interface Pramas {
   socket: Socket

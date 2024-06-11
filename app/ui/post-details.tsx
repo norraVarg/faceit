@@ -13,7 +13,7 @@ const PostDetails = (params: Params) => {
     <div className='relative flex flex-col gap-4'>
       <div className='flex flex-col items-center gap-4'>
         <Link href={'/feed'}>
-          <svg className="stroke-gray-500 absolute left-0 size-6 hover:stroke-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+          <svg className="stroke-gray-500 absolute top-0 left-0 size-6 hover:stroke-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
           </svg>
         </Link>
@@ -23,7 +23,13 @@ const PostDetails = (params: Params) => {
       </div>
       <article className='flex flex-col gap-4'>
         <h2 className='text-lg font-semibold leading-6 text-gray-900'>{post.title}</h2>
-        <p className='text-sm leading-6 text-gray-700'>{post.body} {post.body}{post.body}{post.body}{post.body}{post.body}{post.body}{post.body}{post.body} test long content =====</p>
+        <p className='text-sm leading-6 text-gray-700'>
+          {post.body}<br />
+          {post.body}<br />
+          {post.body}<br /><br />
+          {post.body}{'. '}{post.body}{'. '}{post.body}{'. '}{post.body}{'. '}{post.body}{'. '}{post.body}{'. '}{post.body}{'. '}{post.body}{'. '}
+          <br /><br />=== test long content end ===
+        </p>
       </article>
     </div>
   )
