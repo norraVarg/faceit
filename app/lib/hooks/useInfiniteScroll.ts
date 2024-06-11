@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 
-export const useInfiniteScroll = () => {
+export const useInfiniteScroll = (enabled: boolean = true) => {
   const [fetchMore, setFetchMore] = useState(false)
   const anchorRef = useRef(null)
 
   useEffect(() => {
+    if (!enabled) {
+      return
+    }
+
     const anchorEl = anchorRef.current
 
     const observer = new IntersectionObserver((entries) => {
@@ -20,7 +24,7 @@ export const useInfiniteScroll = () => {
         observer.unobserve(anchorEl)
       }
     }
-  }, [fetchMore])
+  }, [fetchMore, enabled])
 
   return { anchorRef, fetchMore }
 }

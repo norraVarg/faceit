@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import { FetchStatus, Post } from '../../definitions'
+import { usePersistlStore } from '../persistStore'
 
 const API_URL = 'https://jsonplaceholder.typicode.com/posts'
 

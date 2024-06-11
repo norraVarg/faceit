@@ -9,10 +9,13 @@ import { usePersistlStore } from '../lib/features/persistStore'
 import Feed from '../ui/feed'
 import NewPostMock from '../ui/new-post-mock'
 
+const PAGE_SIZE = 20
+
 const FeedPage = () => (<FeedProvider><FeedComponent /></FeedProvider>)
 
 const FeedComponent = () => {
   const feedStore = useFeedStore()
+
   const feedInitialized = useRef(false)
   if (!feedInitialized.current) {
     feedStore.dispatch(fetchPosts())
@@ -25,6 +28,16 @@ const FeedComponent = () => {
   const users = usePersistlStore(state => state.users.entities)
   const newPosts = usePersistlStore(state => state.newPosts)
   const addNewPost = usePersistlStore(state => state.addNewPost)
+  const setScrollPosition = usePersistlStore(state => state.setScrollPosition)
+  const scrollPosition = usePersistlStore(state => state.scrollPosition)
+  const setPage = usePersistlStore(state => state.setPage)
+  const page = usePersistlStore(state => state.page)
+
+  const displayedPostIds = postIds.slice(0, page * PAGE_SIZE)
+
+  const onScroll = (position: number) => {
+    setScrollPosition(position)
+  }
 
   const socketInitialized = useRef(false)
   if (!socketInitialized.current) {
@@ -36,7 +49,7 @@ const FeedComponent = () => {
 
   return (
     <main className=''>
-      <Feed postIds={postIds} posts={posts} newPosts={newPosts} users={users} />
+      <Feed page={page} displayedPostIds={displayedPostIds} posts={posts} newPosts={newPosts} users={users} onScroll={onScroll} setPage={setPage} scrollPosition={scrollPosition} />
       <div className='absolute top-2.5 right-1 z-30'>
         <NewPostMock socket={socket} />
       </div>

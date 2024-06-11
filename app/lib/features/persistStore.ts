@@ -11,12 +11,21 @@ export type State = {
   newPosts: {
     ids: number[]
     entities: Record<number, Post>
+  },
+  posts: {
+    ids: number[]
+    entities: Record<number, Post>
   }
+  scrollPosition: number,
+  page: number
 }
 
 export type Actions = {
   setUsers: (users: Record<number, User>) => void
   addNewPost: (post: Post) => void
+  setPosts: (ids: number[], entities: Record<number, Post>) => void
+  setScrollPosition: (position: number) => void
+  setPage: (page: number) => void
 }
 
 const usersAdapter = createEntityAdapter<User>({})
@@ -31,7 +40,7 @@ export const usePersistlStore = create<State & Actions>()(
   persist(
     set => ({
       users: usersInitialState,
-      setUsers: (users: Record<number, User>) => {
+      setUsers: (users) => {
         const entityState = usersAdapter.setAll(usersInitialState, users)
         set(() => ({
           users: entityState
@@ -41,6 +50,27 @@ export const usePersistlStore = create<State & Actions>()(
       addNewPost: (post) => {
         set((state) => ({
           newPosts: newPostsAdapter.addOne(state.newPosts, post)
+        }))
+      },
+      posts: {
+        ids: [],
+        entities: {}
+      },
+      setPosts: (ids, entities) => {
+        set(() => ({
+          posts: { ids, entities }
+        }))
+      },
+      scrollPosition: 0,
+      setScrollPosition: (position) => {
+        set(() => ({
+          scrollPosition: position
+        }))
+      },
+      page: 1,
+      setPage: (page) => {
+        set(() => ({
+          page
         }))
       }
     }),
