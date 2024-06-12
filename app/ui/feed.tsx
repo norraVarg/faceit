@@ -22,7 +22,8 @@ const Feed = (params: Params) => {
 
   const [newPostReceived, setNewPostReceived] = useState(false)
   const previousNewPostIds = useRef(newPosts.ids)
-  const { anchorRef, fetchMore } = useInfiniteScroll(displayedPostIds.length > 0)
+  const infiniteScrollRef = useRef<HTMLDivElement | null>(null)
+  const { fetchMore } = useInfiniteScroll(infiniteScrollRef.current, displayedPostIds.length > 0)
   const scrollPositionRef = useScrollPosition<HTMLUListElement>(scrollPosition)
 
   const hasMorePosts = displayedPostIds.length < Object.keys(posts).length
@@ -59,7 +60,7 @@ const Feed = (params: Params) => {
         {newPosts.ids.map((id) => (<FeedItem key={id} post={newPosts.entities[id]} user={users[newPosts.entities[id].userId]} />))}
         {displayedPostIds.map((id) => (<FeedItem key={id} post={posts[id]} user={users[posts[id].userId]} />))}
 
-        <div ref={anchorRef} className='flex justify-center mt-2'>
+        <div ref={infiniteScrollRef} className='flex justify-center mt-2'>
           {hasMorePosts && (<span className='text-xs text-gray-600'>Fetching more...</span>)}
         </div>
       </ul>
