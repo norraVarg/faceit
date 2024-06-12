@@ -6,8 +6,8 @@ import FeedProvider from '../lib/features/feed/FeedStoreProvider'
 import { useFeedSelector, useFeedStore } from '../lib/features/feed/feedHooks'
 import { fetchPosts } from '../lib/features/feed/feedSlice'
 import { usePersistlStore } from '../lib/features/persistStore'
-import Feed from '../ui/feed'
-import NewPostMock from '../ui/new-post-mock'
+import Feed from '../ui/feed/feed'
+import NewPostMock from '../ui/feed/new-post-mock'
 
 const PAGE_SIZE = 20
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Post, User } from '../lib/definitions'
-import { useInfiniteScroll } from '../lib/hooks/useInfiniteScroll'
-import useScrollPosition from '../lib/hooks/useScrollPosition'
+import { Post, User } from '../../lib/definitions'
+import { useInfiniteScroll } from '../../lib/hooks/useInfiniteScroll'
+import useScrollPosition from '../../lib/hooks/useScrollPosition'
 import FeedItem from './feed-item'
 
 interface Params {

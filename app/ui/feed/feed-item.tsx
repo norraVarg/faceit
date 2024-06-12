@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Post, User } from '../lib/definitions'
-import { getTimeStamp } from '../lib/utils/getTimeStamp'
-import { isNewPost } from '../lib/utils/isNewPost'
+import { Post, User } from '../../lib/definitions'
+import { getTimeStamp } from '../../lib/utils/getTimeStamp'
+import { isNewPost } from '../../lib/utils/isNewPost'
 
 interface Params {
   post: Post

@@ -1,6 +1,6 @@
+import { TOTAL_POST_COUNT } from '@/app/lib/definitions'
+import { generateRandomId } from '@/app/lib/utils/generateRandomId'
 import { Socket } from 'socket.io-client'
-import { TOTAL_POST_COUNT } from '../lib/definitions'
-import { generateRandomId } from '../lib/utils/generateRandomId'
 
 let postCount = TOTAL_POST_COUNT
 
