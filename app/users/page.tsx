@@ -7,7 +7,7 @@ const UsersPage = () => {
   const users = usePersistlStore(state => state.users)
 
   return (
-    <main>
+    <main className='users-page'>
       <UsersList ids={users.ids} entities={users.entities} />
     </main>
   )

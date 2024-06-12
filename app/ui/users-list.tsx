@@ -9,7 +9,7 @@ const UsersList = (props: Props) => {
   const { ids, entities } = props
 
   return (
-    <main className='grid grid-rows-12 h-screen '>
+    <div className='grid grid-rows-12 h-screen '>
       <h1 className="flex items-center text-lg font-semibold leading-6 text-gray-900 px-5 sm:hidden">Users</h1>
       <ul role="list" className="row-start-2 row-span-10 divide-y divide-gray-200 overflow-y-auto sm:row-start-1 sm:row-span-11">
         {ids.map(id => (
@@ -21,7 +21,7 @@ const UsersList = (props: Props) => {
           </div>
         ))}
       </ul>
-    </main>
+    </div>
   )
 }
 

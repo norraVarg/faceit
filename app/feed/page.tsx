@@ -54,7 +54,7 @@ const FeedComponent = () => {
   }
 
   return (
-    <main className=''>
+    <main className='feed-page'>
       <Feed displayedPostIds={displayedPostIds} posts={posts} newPosts={newPosts} users={users} onScroll={onScroll} fetchMorePost={fetchMorePost} scrollPosition={scrollPosition} />
       <div className='absolute top-2.5 right-1 z-30'>
         <NewPostMock socket={socket} />
